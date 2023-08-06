@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Table(name = "users")
 @Entity
 @Getter
@@ -15,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity {
+    // TODO update length
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,6 +21,8 @@ public class UserEntity {
     private String name;
     @Column(name = "password", length = 120, nullable = false)
     private String password;
+    @Column(name = "mail_address", length = 120, nullable = false)
+    private String mailAddress;
     @Column(name = "role", length = 10)
     private String role;
     @Column(name = "status", nullable = false)

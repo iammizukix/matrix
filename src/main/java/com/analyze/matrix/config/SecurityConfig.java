@@ -13,29 +13,28 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/", "/registration/**").permitAll()
-//                        .requestMatchers("/").hasRole("ROLE_USER")
-                        .anyRequest().authenticated())
-                .formLogin((form) -> form
-                        .loginProcessingUrl("/login")
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/home", true)
-                        .failureUrl("/login?error")
-                        .permitAll()
-                ).logout((logout) -> logout
-                        .logoutSuccessUrl("/login")
-                )
-        ;
-        return http.build();
-    }
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http
+                                .authorizeHttpRequests((requests) -> requests
+                                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                                                .permitAll()
+                                                .requestMatchers("/", "/registration/**").permitAll()
+                                                // .requestMatchers("/").hasRole("ROLE_USER")
+                                                .anyRequest().authenticated())
+                                .formLogin((form) -> form
+                                                .loginProcessingUrl("/login")
+                                                .loginPage("/login")
+                                                .defaultSuccessUrl("/index", true)
+                                                .failureUrl("/login?error")
+                                                .permitAll())
+                                .logout((logout) -> logout
+                                                .logoutSuccessUrl("/login"));
+                return http.build();
+        }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 }

@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-@Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
@@ -27,8 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UserEntity user = userRepository.findByName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found. username = " + username));
         String password = user.getPassword();
-        Collection<GrantedAuthority> authorities =
-                List.of(new SimpleGrantedAuthority(user.getRole()));
+        Collection<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole()));
         return new UserDetailsImpl(username, password, authorities);
     }
 }
